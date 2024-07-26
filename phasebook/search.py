@@ -11,18 +11,7 @@ def search():
     return {"users": search_users(request.args.to_dict())}, 200
 
 def search_users(args):
-    """Search users database
-    
-    Parameters:
-        args: a dictionary containing the following search parameters:
-            id: string (optional)
-            name: string (optional)
-            age: string (optional)
-            occupation: string (optional)
-    
-    Returns:
-        a list of users that match the search parameters, sorted by match priority
-    """
+
     id_param = args.get("id")
     name_param = args.get("name")
     age_param = args.get("age")
@@ -44,6 +33,5 @@ def search_users(args):
         if match_score > 0:
             results.append((match_score, user))
 
-    # Sort by match score in descending order, then remove score from the results
     results.sort(key=lambda x: x[0], reverse=True)
     return [user for score, user in results]
